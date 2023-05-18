@@ -47,6 +47,30 @@ async function run() {
 
     })
 
+    app.put('/' , async(req,res) => {
+        const filter = {_id : new ObjectId(req.body.id)}
+        const options = { upsert : true }
+        const update = {
+          $set: {
+            name : req.body.name ,
+            price : req.body.price,
+            quantity : req.body.quantity,
+            description :req.body.description ,
+            rating : req.body.rating
+          }
+        }
+        const result = await db.updateOne(filter,update,options)
+        res.send(result)
+      })
+  
+
+    
+    app.post('/addtoys' , async(req,res) => {
+        
+
+        const result =await db.insertOne(req.body)
+        console.log(result)
+    })
 
 
 
