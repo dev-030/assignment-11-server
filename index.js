@@ -19,7 +19,7 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
-
+[]
 async function run() {
   try {
     client.connect();
@@ -32,6 +32,18 @@ async function run() {
         res.send(result)
     })
 
+    app.get('/:id' , async(req,res) => {
+        console.log(req.params.id)
+
+
+        const result = await db.find().toArray()
+
+    })
+
+    app.post('/addtoys' , async(req,res) => {
+        
+        console.log(req.body)
+    })
 
 
     await client.db("admin").command({ ping: 1 });
@@ -41,7 +53,6 @@ async function run() {
   }
 }
 run().catch(console.dir);
-
 
 
 
