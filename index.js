@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express()
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 
 app.use(express.json())
@@ -32,11 +32,14 @@ async function run() {
         res.send(result)
     })
 
-    app.get('/:id' , async(req,res) => {
-        console.log(req.params.id)
+    app.get('/all-toys/:id' , async(req,res) => {
 
+        const query = {_id : new ObjectId(req.params.id)}
+        const result = await db.find(query).toArray()
 
-        const result = await db.find().toArray()
+        console.log(result)
+        res.send(result)
+
 
     })
 
