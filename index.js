@@ -32,6 +32,17 @@ async function run() {
         res.send(result)
     })
 
+    app.get('/category' , async(req,res) => {
+        let query = {} ;
+
+        // console.log(req.query.email)
+        query = {category : req.query.category}
+        const result = await db.find(query).toArray()
+
+        res.send(result)
+        console.log(result)
+    })
+
     app.get('/my-toys' , async(req,res) => {
 
     
