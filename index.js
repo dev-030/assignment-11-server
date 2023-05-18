@@ -30,6 +30,7 @@ async function run() {
     app.get('/' , async(req,res) => {
         const result = await db.find().limit(20).toArray()
         res.send(result)
+        console.log(result)
     })
 
     app.get('/category' , async(req,res) => {
@@ -37,7 +38,7 @@ async function run() {
 
         // console.log(req.query.email)
         query = {category : req.query.category}
-        const result = await db.find(query).toArray()
+        const result = await db.find(query).limit(6).toArray()
 
         res.send(result)
         console.log(result)
@@ -53,10 +54,23 @@ async function run() {
             query = {sellerEmail : req.query.email}
             const result = await db.find(query).toArray()
             res.send(result)
-            console.log(result)
+            // console.log(result)
             // console.log(req.query.email)
 
     })
+
+    app.get('/my-toys/sort', async(req, res) => {
+
+        let query = {} ;
+        query = {sellerEmail : req.query.email}
+        const result = await db.find(query).sort({price:parseInt(req.query.sorting)}).toArray()
+        res.send(result);
+      })
+
+
+
+
+
 
     app.put('/' , async(req,res) => {
         const filter = {_id : new ObjectId(req.body.id)}
@@ -70,6 +84,7 @@ async function run() {
             rating : req.body.rating
           }
         }
+        console.log(update)
         const result = await db.updateOne(filter,update,options)
         res.send(result)
       })
@@ -77,10 +92,22 @@ async function run() {
 
     
     app.post('/addtoys' , async(req,res) => {
-        
 
-        const result =await db.insertOne(req.body)
-        console.log(result)
+        const data = {
+            name : req.body.name ,
+            image: req.body.image,
+            price: parseInt(req.body.price),
+            rating : parseInt(req.body.rating),
+            quantity : parseInt(req.body.quantity),
+            description : req.body.description,
+            category : req.body.category,
+            sellerName : req.body.sellerName,
+            sellerEmail : req.body.sellerEmail,
+        }
+        
+        const result =await db.insertOne(data)
+        res.send(result)
+
     })
 
 
