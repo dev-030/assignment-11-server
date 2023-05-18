@@ -28,9 +28,42 @@ async function run() {
 
 
     app.get('/' , async(req,res) => {
-        const result = await db.find().toArray()
+        const result = await db.find().limit(20).toArray()
         res.send(result)
     })
+
+    app.get('/my-toys' , async(req,res) => {
+
+    
+            let query = {} ;
+
+            // console.log(req.query.email)
+
+            query = {sellerEmail : req.query.email}
+            const result = await db.find(query).toArray()
+            res.send(result)
+            console.log(result)
+            // console.log(req.query.email)
+
+    })
+
+
+
+
+
+
+    app.delete('/my-toys' , async(req,res) => {
+        const query = {_id : new ObjectId(req.body.data)}
+        const result = await db.deleteOne(query)
+        res.send(result)
+    })
+
+    // app.post('/' , async(req,res) => {
+    //     console.log('called')
+    //     const result = await db.find().limit(20+Number(req.body.value)).toArray()
+    //     res.send(result)
+    //     // console.log(result)
+    // })
 
     app.get('/all-toys/:id' , async(req,res) => {
 
@@ -40,13 +73,9 @@ async function run() {
         console.log(result)
         res.send(result)
 
-
     })
 
-    app.post('/addtoys' , async(req,res) => {
-        
-        console.log(req.body)
-    })
+
 
 
     await client.db("admin").command({ ping: 1 });
