@@ -30,7 +30,6 @@ async function run() {
     app.get('/' , async(req,res) => {
         const result = await db.find().limit(20).toArray()
         res.send(result)
-        console.log(result)
     })
 
     app.get('/category' , async(req,res) => {
@@ -38,7 +37,6 @@ async function run() {
         query = {category : req.query.category}
         const result = await db.find(query).limit(6).toArray()
         res.send(result)
-        console.log(result)
     })
 
     app.get('/my-toys' , async(req,res) => {
@@ -89,7 +87,6 @@ async function run() {
             rating : req.body.rating
             }
         }
-        console.log(update)
         const result = await db.updateOne(filter,update,options)
         res.send(result)
     })
