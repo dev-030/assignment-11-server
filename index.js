@@ -9,7 +9,7 @@ app.use(cors());
 
 
 
-const uri = "mongodb+srv://jamil3251:iuL95VLgEDQWgYQl@cluster0.qcnne9d.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://test:K4eBYlSmrhWdqTJI@cluster0.qcnne9d.mongodb.net/?retryWrites=true&w=majority";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
